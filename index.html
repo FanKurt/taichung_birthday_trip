@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#f8f5f0" />
   <meta name="description" content="2026 台中 3 天 2 夜親子生日之旅，行程、導航、記帳、打包清單與住宿資訊。" />
   <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-  <link rel="icon" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <link rel="icon" type="image/svg+xml" href="./icon.svg" />
   <title>台中小壽星旅行 · 2026</title>
   <style>
     :root{--bg:#f8f6f1;--paper:#fff;--text:#263632;--sub:#77827c;--line:#e9eae4;--dark:#204c42;--sage:#e8f2e9;--green:#3d7967;--mint:#a2cfb8;--orange:#da795c;--peach:#fff0e5;--yellow:#f8c873;--blue:#eaf1fc;--blueInk:#476da3;--shadow:0 10px 24px rgba(39,59,50,.055);--radius:19px;--font:'Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,-apple-system,sans-serif;}
@@ -217,6 +217,7 @@ phone.addEventListener('click',e=>{const a=e.target.closest('[data-action]');if(
 phone.addEventListener('submit',e=>{if(e.target.id==='expenseForm'){e.preventDefault();const f=new FormData(e.target),id=e.target.dataset.editId,title=String(f.get('title')||'').trim(),amount=Number(f.get('amount'));if(!title||!Number.isFinite(amount)||amount<=0){notify('請輸入名稱及有效金額');return}const item={id:id||'exp_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),title,amount:Math.round(amount),cat:f.get('cat'),date:f.get('date'),memo:String(f.get('memo')||'').trim()};store.expenses=Array.isArray(store.expenses)?store.expenses:[];if(id){store.expenses=store.expenses.map(x=>x.id===id?item:x)}else{store.expenses.push(item)}save();closeModal();render(false);notify('記帳已儲存')}if(e.target.id==='checkForm'){e.preventDefault();const f=new FormData(e.target),label=String(f.get('label')||'').trim();if(!label)return;store.customChecks=[...(store.customChecks||[]),{id:'custom_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),label,group:String(f.get('group')||'其他事項'),custom:true}];save();closeModal();render(false);notify('待辦已加入清單')}});
 phone.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if((e.key===' '||e.key==='Enter')&&e.target.matches('.checkrow[role="checkbox"]')){e.preventDefault();e.target.click()}});
 render();
+if('serviceWorker' in navigator && location.protocol==='https:') {window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
 
 </script>
 </body>
